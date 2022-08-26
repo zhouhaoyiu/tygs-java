@@ -19,4 +19,5 @@ public class WaterMeterInfo {
     public String accountName;
     public String status;
     public String updateTime;
+    public String waterMeterFrom;
 }

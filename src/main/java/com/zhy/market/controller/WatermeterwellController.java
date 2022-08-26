@@ -8,10 +8,10 @@
 
 package com.zhy.market.controller;
 
+import com.zhy.market.domain.RepairInfo;
 import com.zhy.market.domain.WaterMeterInfo;
-import com.zhy.market.mapper.TygsMapper;
 import com.zhy.market.mapper.WaterMeterInfoMapper;
-import lombok.Data;
+import com.zhy.market.mapper.WatermeterwellMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,21 +21,21 @@ import java.util.List;
 import static com.zhy.market.controller.utils.getJsonRes;
 
 @RestController
-@RequestMapping("Tygs")
-public class TygsController {
+@RequestMapping("Watermeterwell")
+public class WatermeterwellController {
 
     @Autowired
     private WaterMeterInfoMapper waterMeterInfoMapper;
     @Autowired
-    private TygsMapper tygsMapper;
+    private WatermeterwellMapper watermeterwellMapper;
 
-    @GetMapping("getAllInfo")
+    @GetMapping("getAllWatermeterwellInfo")
     public Object getAllInfo() {
-        return tygsMapper.getAllInfo();
+        return watermeterwellMapper.getAllWatermeterwellInfo();
     }
 
-    @PostMapping("updateRepairInfo")
-    public Object updateRepairInfo(@RequestBody RepairInfo repairInfo) {
+    @PostMapping("updateWatermeterwellRepairInfoWithId")
+    public Object updateWatermeterwellRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
         System.out.println(repairInfo);
 
         String repairInfoText = repairInfo.repairInfo;
@@ -44,20 +44,20 @@ public class TygsController {
         System.out.println(repairInfoText);
         System.out.println(id);
 
-        Integer res = tygsMapper.updateRepairInfoWithId(repairInfoText, id);
+        Integer res = watermeterwellMapper.updateWatermeterwellRepairInfoWithId(repairInfoText, id);
         // Todo 判断res
         return getJsonRes(1, "更新维修记录成功", (List) null);
 //        return  null;
     }
 
-    @GetMapping("getRepairInfoById")
-    public Object getRepairInfoById(HttpServletRequest request) {
+    @GetMapping("getWatermeterwellRepairInfoById")
+    public Object getWatermeterwellRepairInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
         System.out.println("getRepairInfoById" + id);
-        return getJsonRes(0, "获得维修记录成功", tygsMapper.getRepairInfoById(id));
+        return getJsonRes(0, "获得维修记录成功", watermeterwellMapper.getWatermeterwellRepairInfoById(id));
     }
 
-    @PostMapping("insertWaterMeterInfo")
+    @PostMapping("insertWatermeterwellWaterMeterInfo")
     public Object insertWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
         String waterMeterId = waterMeterInfo.waterMeterId;
         Integer wallId = waterMeterInfo.wallId;
@@ -67,23 +67,18 @@ public class TygsController {
         String status = waterMeterInfo.status;
         String updateTime = waterMeterInfo.updateTime;
         System.out.println("waterMeterId" + waterMeterId);
-        Integer res = waterMeterInfoMapper.insertWaterMeterInfo(waterMeterId, wallId, paymentNumber, accountNumber, accountName, status, updateTime);
+        Integer res = waterMeterInfoMapper.insertWatermeterwellWaterMeterInfo(waterMeterId, wallId, paymentNumber, accountNumber, accountName, status, updateTime);
 
         return getJsonRes(0, "test", res.toString());
     }
 
-    @GetMapping("getWaterMeterByWallId")
+    @GetMapping("getWatermeterwellWaterMeterInfoByWallId")
     public Object getWaterMeterInfoById(HttpServletRequest request) {
         Integer wallId = Integer.valueOf(request.getParameter("wallId"));
         System.out.println("getWaterMeterByWallId" + wallId);
-        System.out.println(waterMeterInfoMapper.getWaterMeterInfoByWallId(wallId));
-        return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getWaterMeterInfoByWallId(wallId));
+        System.out.println(waterMeterInfoMapper.getWatermeterwellWaterMeterInfoByWallId(wallId));
+        return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getWatermeterwellWaterMeterInfoByWallId(wallId));
     }
 
 }
 
-@Data
-class RepairInfo {
-    public String repairInfo;
-    public Integer id;
-}

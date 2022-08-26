@@ -8,7 +8,7 @@
 
 package com.zhy.market.mapper;
 
-import com.zhy.market.domain.Tygs;
+import com.zhy.market.domain.Watermeterwell;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -17,17 +17,17 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TygsMapper {
-    @Select("select * from tygs")
-    List<Tygs> getAllInfo();
+public interface WatermeterwellMapper {
+    @Select("select * from watermeterwell")
+    List<Watermeterwell> getAllWatermeterwellInfo();
 
-    @Select("select * from tygs where FilledBy like #{FilledBy}")
-    List<Tygs> getInfoByFilled();
+    @Select("select * from watermeterwell where FilledBy like #{FilledBy}")
+    List<Watermeterwell> getWatermeterwellInfoByFilled();
 
-    @Update("update tygs set repairInfo = #{repairInfo} where id = #{id} ")
-    Integer updateRepairInfoWithId(@Param("repairInfo") String repairInfo, @Param("id") Integer id);
+    @Update("update watermeterwell set repairInfo = #{repairInfo} where id = #{id} ")
+    Integer updateWatermeterwellRepairInfoWithId(@Param("repairInfo") String repairInfo, @Param("id") Integer id);
 
-    @Select("select repairInfo from tygs where id = #{id}")
-    String getRepairInfoById(@Param("id") Integer id);
+    @Select("select repairInfo from watermeterwell where id = #{id}")
+    String getWatermeterwellRepairInfoById(@Param("id") Integer id);
 }
 

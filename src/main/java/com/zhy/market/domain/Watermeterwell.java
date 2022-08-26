@@ -11,7 +11,7 @@ package com.zhy.market.domain;
 import lombok.Data;
 
 @Data
-public class Tygs {
+public class Watermeterwell {
     public Integer id;
     public String filledBy;
     public String department;
