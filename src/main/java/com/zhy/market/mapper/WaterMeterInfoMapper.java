@@ -24,4 +24,7 @@ public interface WaterMeterInfoMapper {
 
     @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'watermeterwell')")
     Integer insertWatermeterwellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber, String accountNumber, String accountName, String status, String updateTime);
+
+    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'valuewell')")
+    Integer insertValuewellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber, String accountNumber, String accountName, String status, String updateTime);
 }
