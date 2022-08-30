@@ -28,6 +28,9 @@ public interface WaterMeterInfoMapper {
         @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'valuewell' ")
         List<WaterMeterInfo> getValueWellWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
 
+        @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'firehydrant' ")
+        List<WaterMeterInfo> getFireHydrantWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
+
         @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'watermeterwell')")
         Integer insertWaterMeterWellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
                         String accountNumber, String accountName, String status, String updateTime);
@@ -38,5 +41,9 @@ public interface WaterMeterInfoMapper {
 
         @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'valuewell')")
         Integer insertValueWellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
+                        String accountNumber, String accountName, String status, String updateTime);
+                        
+        @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'firehydrant')")
+        Integer insertFireHydrantWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
                         String accountNumber, String accountName, String status, String updateTime);
 }

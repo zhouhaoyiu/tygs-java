@@ -53,7 +53,7 @@ public class FireHydrantController {
   public Object getFireHydrantRepairInfoById(HttpServletRequest request) {
     Integer id = Integer.valueOf(request.getParameter("id"));
     System.out.println("getFireHydrantRepairInfoById FireHydrant" + id);
-    return getJsonRes(0, "获得消防栓信息成功", fireHydrantMapper.getFireHydrantRepairInfoById(id));
+    return getJsonRes(0, "获得消防栓维修信息成功", fireHydrantMapper.getFireHydrantRepairInfoById(id));
   }
   
 }

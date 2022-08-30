@@ -11,7 +11,7 @@ package com.zhy.market.controller;
 import com.zhy.market.domain.RepairInfo;
 import com.zhy.market.domain.WaterMeterInfo;
 import com.zhy.market.mapper.WaterMeterInfoMapper;
-import com.zhy.market.mapper.WatermeterwellMapper;
+import com.zhy.market.mapper.WaterMeterWellMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +20,12 @@ import static com.zhy.market.controller.utils.getJsonRes;
 
 @RestController
 @RequestMapping("Watermeterwell")
-public class WatermeterwellController {
+public class WaterMeterWellController {
 
     @Autowired
     private WaterMeterInfoMapper waterMeterInfoMapper;
     @Autowired
-    private WatermeterwellMapper watermeterwellMapper;
+    private WaterMeterWellMapper watermeterwellMapper;
 
     @GetMapping("getAllWatermeterwellInfo")
     public Object getAllInfo() {

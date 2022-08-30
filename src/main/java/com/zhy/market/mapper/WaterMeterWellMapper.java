@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface WatermeterwellMapper {
+public interface WaterMeterWellMapper {
     @Select("select * from watermeterwell")
     List<Watermeterwell> getAllWatermeterwellInfo();
 
