@@ -21,6 +21,9 @@ public interface WatermeterwellMapper {
     @Select("select * from watermeterwell")
     List<Watermeterwell> getAllWatermeterwellInfo();
 
+    @Select("select count(*) from watermeterwell")
+    Integer getAllWatermeterwellInfoCount();
+
     @Select("select * from watermeterwell where FilledBy like #{FilledBy}")
     List<Watermeterwell> getWatermeterwellInfoByFilled();
 

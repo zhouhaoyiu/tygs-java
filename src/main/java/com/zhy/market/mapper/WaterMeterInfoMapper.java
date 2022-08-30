@@ -19,12 +19,24 @@ import java.util.List;
 @Repository
 public interface WaterMeterInfoMapper {
 
-    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterwell' ")
-    List<WaterMeterInfo> getWatermeterwellWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
+        @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterwell' ")
+        List<WaterMeterInfo> getWatermeterwellWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
 
-    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'watermeterwell')")
-    Integer insertWatermeterwellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber, String accountNumber, String accountName, String status, String updateTime);
+        @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterroom' ")
+        List<WaterMeterInfo> getWatermeterRoomWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
 
-    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'valuewell')")
-    Integer insertValuewellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber, String accountNumber, String accountName, String status, String updateTime);
+        @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'valuewell' ")
+        List<WaterMeterInfo> getValueWellWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
+
+        @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'watermeterwell')")
+        Integer insertWaterMeterWellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
+                        String accountNumber, String accountName, String status, String updateTime);
+
+        @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'watermeterroom')")
+        Integer insertWaterMeterRoomInfoWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
+                        String accountNumber, String accountName, String status, String updateTime);
+
+        @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},#{status},#{updateTime},'valuewell')")
+        Integer insertValueWellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
+                        String accountNumber, String accountName, String status, String updateTime);
 }

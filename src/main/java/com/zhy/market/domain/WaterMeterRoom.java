@@ -3,7 +3,7 @@ package com.zhy.market.domain;
 import lombok.Data;
 
 @Data
-public class ValueWall {
+public class WaterMeterRoom {
     public Integer id;
     public String filledBy; // 填写人
     public String department; // 所在部门
