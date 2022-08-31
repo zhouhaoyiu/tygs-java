@@ -53,7 +53,7 @@ public class WaterMeterWellController {
     @GetMapping("getWatermeterwellRepairInfoById")
     public Object getWatermeterwellRepairInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
-        System.out.println("getRepairInfoById" + id);
+        System.out.println("getRepairInfoById watermeterwell" + id);
         return getJsonRes(0, "获得维修记录成功", watermeterwellMapper.getWatermeterwellRepairInfoById(id));
     }
 
