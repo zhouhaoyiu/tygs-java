@@ -28,5 +28,6 @@ public class WaterMeterRoom {
     public String valueWallOutSide;
     public String valueWallInside;
     public String personLiable;
+    public String repairInfo;
 
 }

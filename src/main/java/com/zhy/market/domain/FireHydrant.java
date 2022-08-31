@@ -24,4 +24,5 @@ public class FireHydrant {
   public String runTime; // 运行时间
   public String repairTime; // 维修时间
   public String photosOutsideTheWell; // 井外照片
+  public String repairInfo;
 }
