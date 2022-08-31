@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zhy.market.mapper.WaterMeterRoomMapper;
 
-@RequestMapping("tygs")
+@RequestMapping("Tygs")
 @RestController
 public class TygsController {
     @Autowired
