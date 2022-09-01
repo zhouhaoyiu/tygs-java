@@ -2,14 +2,13 @@ package com.zhy.market.controller;
 
 import com.zhy.market.mapper.FireHydrantMapper;
 import com.zhy.market.mapper.ValueWellMapper;
+import com.zhy.market.mapper.WaterMeterRoomMapper;
 import com.zhy.market.mapper.WaterMeterWellMapper;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.zhy.market.mapper.WaterMeterRoomMapper;
 
 @RequestMapping("Tygs")
 @RestController
