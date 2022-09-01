@@ -38,9 +38,9 @@ public class FireHydrantController {
 
         Integer res = fireHydrantMapper.updateFireHydrantRepairInfoWithId(repairInfoText, id);
         if (res == 1) {
-            return getJsonRes(1, "更新维修记录成功");
+            return getJsonRes(0, "更新维修记录成功");
         } else {
-            return getJsonRes(0, "更新维修记录失败");
+            return getJsonRes(1, "更新维修记录失败");
         }
     }
 

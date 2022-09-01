@@ -25,8 +25,8 @@ public class WaterMeterRoom {
     public String pipe;
     public String conditionOfWaterSeparator;
     public String Troubleshooting;
-    public String valueWallOutSide;
-    public String valueWallInside;
+    public String wallOutSide;
+    public String wallInside;
     public String personLiable;
     public String repairInfo;
 
