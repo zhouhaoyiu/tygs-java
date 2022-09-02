@@ -59,7 +59,7 @@ public class WaterMeterWellController {
     }
 
     @PostMapping("insertWaterMeterWellWaterMeterInfo")
-    public Object insertWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
+    public Object insertWaterMeterWellWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
 
         System.out.println("WaterMeterWellwaterMeterId " + waterMeterInfo.waterMeterId);
         Integer res = waterMeterInfoMapper.insertWaterMeterWellWaterMeterInfo(waterMeterInfo.waterMeterId, waterMeterInfo.wallId, waterMeterInfo.paymentNumber,
