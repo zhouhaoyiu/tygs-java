@@ -67,7 +67,7 @@ public class FireHydrantController {
     public Object getWaterMeterInfoById(HttpServletRequest request) {
         Integer wallId = Integer.valueOf(request.getParameter("wallId"));
         System.out.println("getFireHydrantWaterMeterInfoByWallId" + wallId);
-//        System.out.println(waterMeterInfoMapper.getWatermeterwellWaterMeterInfoByWallId(wallId));
+//        System.out.println(waterMeterInfoMapper.getWaterMeterWellWaterMeterInfoByWallId(wallId));
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getFireHydrantWaterMeterInfoByWallId(wallId));
     }
 }
