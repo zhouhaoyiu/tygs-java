@@ -74,19 +74,19 @@ public class Sheet1Controller {
         return sheet1Mapper.selectInfoByPageAndHhCount(hh);
     }
 
-    @GetMapping("getInfoByPageAndDz")
-    public Object getInfoByPageAndDz(HttpServletRequest request) {
+    @GetMapping("getInfoByPageAndXxdz")
+    public Object getInfoByPageAndXxdz(HttpServletRequest request) {
         Integer page = Integer.parseInt(request.getParameter("page"));
-        String dz = request.getParameter("dz");
+        String xxdz = request.getParameter("xxdz");
         Integer size = 30;
         Integer start = (page - 1) * size;
-        return sheet1Mapper.selectInfoByPageAndDz(start, size, dz);
+        return sheet1Mapper.selectInfoByPageAndXxdz(start, size, xxdz);
     }
 
-    @GetMapping("getInfoByPageAndDzCount")
-    public Integer getInfoByPageAndDzCount(HttpServletRequest request) {
-        String dz = request.getParameter("dz");
-        return sheet1Mapper.selectInfoByPageAndDzCount(dz);
+    @GetMapping("getInfoByPageAndXxdzCount")
+    public Integer getInfoByPageAndXxdzCount(HttpServletRequest request) {
+        String xxdz = request.getParameter("xxdz");
+        return sheet1Mapper.selectInfoByPageAndXxdzCount(xxdz);
     }
 
 

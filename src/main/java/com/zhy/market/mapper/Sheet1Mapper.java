@@ -24,6 +24,7 @@ public interface Sheet1Mapper {
     @Select("select count(*) from sheet1 where mc like concat('%', #{name}, '%')")
     Integer selectInfoByPageAndNameCount(@Param("name") String name);
 
+    // 缴费号
     @Select("select * from sheet1 where jfh like concat('%', #{jfh}, '%') limit #{start}, #{size}")
     List<Sheet1> selectInfoByPageAndJfh(@Param("start") Integer start, @Param("size") Integer size,
                                         @Param("jfh") String jfh);
@@ -31,6 +32,7 @@ public interface Sheet1Mapper {
     @Select("select count(*) from sheet1 where jfh like concat('%', #{jfh}, '%')")
     Integer selectInfoByPageAndJfhCount(@Param("jfh") String jfh);
 
+    // 户号
     @Select("select * from sheet1 where hh like concat('%', #{hh}, '%') limit #{start}, #{size}")
     List<Sheet1> selectInfoByPageAndHh(@Param("start") Integer start, @Param("size") Integer size,
                                        @Param("hh") String hh);
@@ -38,10 +40,11 @@ public interface Sheet1Mapper {
     @Select("select count(*) from sheet1 where hh like concat('%', #{hh}, '%')")
     Integer selectInfoByPageAndHhCount(@Param("hh") String hh);
 
-    @Select("select * from sheet1 where dz like concat('%', #{dz}, '%') limit #{start}, #{size}")
-    List<Sheet1> selectInfoByPageAndDz(@Param("start") Integer start, @Param("size") Integer size,
-                                       @Param("dz") String dz);
+    // 详细地址
+    @Select("select * from sheet1 where xxdz like concat('%', #{xxdz}, '%') limit #{start}, #{size}")
+    List<Sheet1> selectInfoByPageAndXxdz(@Param("start") Integer start, @Param("size") Integer size,
+                                       @Param("xxdz") String xxdz);
 
-    @Select("select count(*) from sheet1 where dz like concat('%', #{dz}, '%')")
-    Integer selectInfoByPageAndDzCount(@Param("dz") String dz);
+    @Select("select count(*) from sheet1 where xxdz like concat('%', #{xxdz}, '%')")
+    Integer selectInfoByPageAndXxdzCount(@Param("xxdz") String xxdz);
 }
