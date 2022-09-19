@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 public class Sheet1 {
     public String jfh;
-    public String cbh;
+    public String hh;
     public String mc;
-    public String dz;
+    public String xxdz;
     public String sbkj;
     public String sbh;
     public String ycbh;

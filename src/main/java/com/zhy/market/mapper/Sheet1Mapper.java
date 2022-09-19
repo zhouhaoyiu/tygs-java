@@ -31,6 +31,13 @@ public interface Sheet1Mapper {
     @Select("select count(*) from sheet1 where jfh like concat('%', #{jfh}, '%')")
     Integer selectInfoByPageAndJfhCount(@Param("jfh") String jfh);
 
+    @Select("select * from sheet1 where hh like concat('%', #{hh}, '%') limit #{start}, #{size}")
+    List<Sheet1> selectInfoByPageAndHh(@Param("start") Integer start, @Param("size") Integer size,
+                                       @Param("hh") String hh);
+
+    @Select("select count(*) from sheet1 where hh like concat('%', #{hh}, '%')")
+    Integer selectInfoByPageAndHhCount(@Param("hh") String hh);
+
     @Select("select * from sheet1 where dz like concat('%', #{dz}, '%') limit #{start}, #{size}")
     List<Sheet1> selectInfoByPageAndDz(@Param("start") Integer start, @Param("size") Integer size,
                                        @Param("dz") String dz);
