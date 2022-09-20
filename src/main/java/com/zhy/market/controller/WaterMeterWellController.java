@@ -15,6 +15,7 @@ import com.zhy.market.mapper.WaterMeterWellMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.zhy.market.controller.utils.getJsonRes;
@@ -23,9 +24,9 @@ import static com.zhy.market.controller.utils.getJsonRes;
 @RequestMapping("Watermeterwell")
 public class WaterMeterWellController {
 
-    @Autowired
+    @Resource
     private WaterMeterInfoMapper waterMeterInfoMapper;
-    @Autowired
+    @Resource
     private WaterMeterWellMapper watermeterwellMapper;
 
     @GetMapping("getAllWatermeterwellInfo")
@@ -35,33 +36,26 @@ public class WaterMeterWellController {
 
     @PostMapping("updateWatermeterwellRepairInfoWithId")
     public Object updateWatermeterwellRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
-        System.out.println(repairInfo);
-
         String repairInfoText = repairInfo.repairInfo;
         Integer id = repairInfo.id;
 
-        System.out.println(repairInfoText);
-        System.out.println(id);
-
         Integer res = watermeterwellMapper.updateWatermeterwellRepairInfoWithId(repairInfoText, id);
         if (res == 1) {
-            return getJsonRes(1, "更新维修记录成功");
+            return getJsonRes(0, "更新维修记录成功");
         } else {
-            return getJsonRes(0, "更新维修记录失败");
+            return getJsonRes(1, "更新维修记录失败");
         }
     }
 
     @GetMapping("getWatermeterwellRepairInfoById")
     public Object getWatermeterwellRepairInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
-        System.out.println("getRepairInfoById watermeterwell" + id);
+
         return getJsonRes(0, "获得维修记录成功", watermeterwellMapper.getWatermeterwellRepairInfoById(id));
     }
 
     @PostMapping("insertWaterMeterWellWaterMeterInfo")
     public Object insertWaterMeterWellWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
-
-        System.out.println("WaterMeterWellwaterMeterId " + waterMeterInfo.waterMeterId);
         Integer res = waterMeterInfoMapper.insertWaterMeterWellWaterMeterInfo(waterMeterInfo.waterMeterId, waterMeterInfo.wallId, waterMeterInfo.paymentNumber,
                 waterMeterInfo.accountNumber, waterMeterInfo.accountName, waterMeterInfo.status, waterMeterInfo.updateTime);
 

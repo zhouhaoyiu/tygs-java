@@ -28,7 +28,7 @@ public class ValueWellController {
     public Object getValueWellInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
         System.out.println("getValueWellInfoById ValueWell" + id);
-        return getJsonRes(0, "获得值井信息成功", valueWellMapper.getValueWellRepairInfoById(id));
+        return getJsonRes(0, "获得表井信息成功", valueWellMapper.getValueWellRepairInfoById(id));
     }
 
     @RequestMapping("updateValueWellRepairInfoWithId")
@@ -38,9 +38,9 @@ public class ValueWellController {
 
         Integer res = valueWellMapper.updateValueWellRepairInfoWithId(repairInfoText, id);
         if (res == 1) {
-            return getJsonRes(1, "更新维修记录成功");
+            return getJsonRes(0, "更新维修记录成功");
         } else {
-            return getJsonRes(0, "更新维修记录失败");
+            return getJsonRes(1, "更新维修记录失败");
         }
     }
 

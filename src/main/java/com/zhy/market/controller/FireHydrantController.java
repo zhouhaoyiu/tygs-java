@@ -7,6 +7,7 @@ import com.zhy.market.mapper.WaterMeterInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.zhy.market.controller.utils.getJsonRes;
@@ -15,9 +16,9 @@ import static com.zhy.market.controller.utils.getJsonRes;
 @RequestMapping("FireHydrant")
 public class FireHydrantController {
 
-    @Autowired
+    @Resource
     private FireHydrantMapper fireHydrantMapper;
-    @Autowired
+    @Resource
     private WaterMeterInfoMapper waterMeterInfoMapper;
 
     @GetMapping("getAllFireHydrantInfo")
