@@ -5,24 +5,25 @@ import com.zhy.market.mapper.ValueWellMapper;
 import com.zhy.market.mapper.WaterMeterRoomMapper;
 import com.zhy.market.mapper.WaterMeterWellMapper;
 import net.sf.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 @RequestMapping("Tygs")
 @RestController
 public class TygsController {
-    @Autowired
+    @Resource
     private WaterMeterRoomMapper waterMeterRoomMapper;
 
-    @Autowired
+    @Resource
     private WaterMeterWellMapper waterMeterWellMapper;
 
-    @Autowired
+    @Resource
     private ValueWellMapper valueWellMapper;
 
-    @Autowired
+    @Resource
     private FireHydrantMapper fireHydrantMapper;
 
     // 获得每种水表的数量
@@ -31,7 +32,7 @@ public class TygsController {
         JSONObject json = new JSONObject();
         json.put("code", 0);
         json.put("waterMeterRoomCount", waterMeterRoomMapper.getAllWaterMeterRoomInfoCount());
-        json.put("waterMeterWellCount", waterMeterWellMapper.getAllWatermeterwellInfoCount());
+        json.put("waterMeterWellCount", waterMeterWellMapper.getAllWaterMeterWellInfoCount());
         json.put("valueWellCount", valueWellMapper.getAllValueWellInfoCount());
         json.put("fireHydrant", fireHydrantMapper.getAllFireHydrantInfoCount());
 

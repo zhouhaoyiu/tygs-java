@@ -12,7 +12,6 @@ import com.zhy.market.domain.RepairInfo;
 import com.zhy.market.domain.WaterMeterInfo;
 import com.zhy.market.mapper.WaterMeterInfoMapper;
 import com.zhy.market.mapper.WaterMeterWellMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import static com.zhy.market.controller.utils.getJsonRes;
 
 @RestController
-@RequestMapping("Watermeterwell")
+@RequestMapping("WaterMeterWell")
 public class WaterMeterWellController {
 
     @Resource
@@ -29,17 +28,17 @@ public class WaterMeterWellController {
     @Resource
     private WaterMeterWellMapper watermeterwellMapper;
 
-    @GetMapping("getAllWatermeterwellInfo")
+    @GetMapping("getAllWaterMeterWellInfo")
     public Object getAllInfo() {
-        return watermeterwellMapper.getAllWatermeterwellInfo();
+        return watermeterwellMapper.getAllWaterMeterWellInfo();
     }
 
-    @PostMapping("updateWatermeterwellRepairInfoWithId")
-    public Object updateWatermeterwellRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
+    @PostMapping("updateWaterMeterWellRepairInfoWithId")
+    public Object updateWaterMeterWellRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
         String repairInfoText = repairInfo.repairInfo;
         Integer id = repairInfo.id;
 
-        Integer res = watermeterwellMapper.updateWatermeterwellRepairInfoWithId(repairInfoText, id);
+        Integer res = watermeterwellMapper.updateWaterMeterWellRepairInfoWithId(repairInfoText, id);
         if (res == 1) {
             return getJsonRes(0, "更新维修记录成功");
         } else {
@@ -47,11 +46,11 @@ public class WaterMeterWellController {
         }
     }
 
-    @GetMapping("getWatermeterwellRepairInfoById")
-    public Object getWatermeterwellRepairInfoById(HttpServletRequest request) {
+    @GetMapping("getWaterMeterWellRepairInfoById")
+    public Object getWaterMeterWellRepairInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
 
-        return getJsonRes(0, "获得维修记录成功", watermeterwellMapper.getWatermeterwellRepairInfoById(id));
+        return getJsonRes(0, "获得维修记录成功", watermeterwellMapper.getWaterMeterWellRepairInfoById(id));
     }
 
     @PostMapping("insertWaterMeterWellWaterMeterInfo")
@@ -62,12 +61,10 @@ public class WaterMeterWellController {
         return getJsonRes(0, "test", res.toString());
     }
 
-    @GetMapping("getWatermeterwellWaterMeterInfoByWallId")
-    public Object getWaterMeterInfoById(HttpServletRequest request) {
+    @GetMapping("getWaterMeterWellWaterMeterInfoByWallId")
+    public Object getWaterMeterWellWaterMeterInfoByWallId(HttpServletRequest request) {
         Integer wallId = Integer.valueOf(request.getParameter("wallId"));
-        System.out.println("getWaterMeterByWallId" + wallId);
-//        System.out.println(waterMeterInfoMapper.getWatermeterwellWaterMeterInfoByWallId(wallId));
-        return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getWatermeterwellWaterMeterInfoByWallId(wallId));
+        return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getWaterMeterWellWaterMeterInfoByWallId(wallId));
     }
 
 }

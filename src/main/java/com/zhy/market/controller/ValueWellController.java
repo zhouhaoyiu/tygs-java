@@ -4,9 +4,9 @@ import com.zhy.market.domain.RepairInfo;
 import com.zhy.market.domain.WaterMeterInfo;
 import com.zhy.market.mapper.ValueWellMapper;
 import com.zhy.market.mapper.WaterMeterInfoMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.zhy.market.controller.utils.getJsonRes;
@@ -14,9 +14,9 @@ import static com.zhy.market.controller.utils.getJsonRes;
 @RestController
 @RequestMapping("ValueWell")
 public class ValueWellController {
-    @Autowired
+    @Resource
     private ValueWellMapper valueWellMapper;
-    @Autowired
+    @Resource
     private WaterMeterInfoMapper waterMeterInfoMapper;
 
     @RequestMapping("getAllValueWellInfo")
@@ -27,7 +27,6 @@ public class ValueWellController {
     @RequestMapping("getValueWellInfoById")
     public Object getValueWellInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
-        System.out.println("getValueWellInfoById ValueWell" + id);
         return getJsonRes(0, "获得表井信息成功", valueWellMapper.getValueWellRepairInfoById(id));
     }
 
@@ -47,13 +46,11 @@ public class ValueWellController {
     @RequestMapping("getValueWellRepairInfoById")
     public Object getValueWellRepairInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
-        System.out.println("getValueWellRepairInfoById ValueWell" + id);
         return getJsonRes(0, "获得维修记录成功", valueWellMapper.getValueWellRepairInfoById(id));
     }
 
     @PostMapping("insertValueWellWaterMeterInfo")
     public Object insertValueWellWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
-        System.out.println("ValueWellWaterMeterId " + waterMeterInfo.waterMeterId);
         Integer res = waterMeterInfoMapper.insertValueWellWaterMeterInfo(waterMeterInfo.waterMeterId, waterMeterInfo.wallId, waterMeterInfo.paymentNumber,
                 waterMeterInfo.accountNumber, waterMeterInfo.accountName, waterMeterInfo.status, waterMeterInfo.updateTime);
 
@@ -63,8 +60,6 @@ public class ValueWellController {
     @GetMapping("getValueWellWaterMeterInfoByWallId")
     public Object geValueWellWaterMeterInfoByWallId(HttpServletRequest request) {
         Integer wallId = Integer.valueOf(request.getParameter("wallId"));
-        System.out.println("getWaterMeterByWallId" + wallId);
-//        System.out.println(waterMeterInfoMapper.getValueWellWaterMeterInfoByWallId(wallId));
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getValueWellWaterMeterInfoByWallId(wallId));
     }
 }

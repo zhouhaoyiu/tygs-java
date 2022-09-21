@@ -19,18 +19,18 @@ import java.util.List;
 @Repository
 public interface WaterMeterWellMapper {
     @Select("select * from watermeterwell")
-    List<Watermeterwell> getAllWatermeterwellInfo();
+    List<Watermeterwell> getAllWaterMeterWellInfo();
 
     @Select("select count(*) from watermeterwell")
-    Integer getAllWatermeterwellInfoCount();
+    Integer getAllWaterMeterWellInfoCount();
 
     @Select("select * from watermeterwell where FilledBy like #{FilledBy}")
-    List<Watermeterwell> getWatermeterwellInfoByFilled();
+    List<Watermeterwell> getWaterMeterWellInfoByFilled();
 
     @Update("update watermeterwell set repairInfo = #{repairInfo} where id = #{id} ")
-    Integer updateWatermeterwellRepairInfoWithId(@Param("repairInfo") String repairInfo, @Param("id") Integer id);
+    Integer updateWaterMeterWellRepairInfoWithId(@Param("repairInfo") String repairInfo, @Param("id") Integer id);
 
     @Select("select repairInfo from watermeterwell where id = #{id}")
-    String getWatermeterwellRepairInfoById(@Param("id") Integer id);
+    String getWaterMeterWellRepairInfoById(@Param("id") Integer id);
 }
 

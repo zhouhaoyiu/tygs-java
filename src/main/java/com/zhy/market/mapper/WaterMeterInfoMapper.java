@@ -20,7 +20,7 @@ import java.util.List;
 public interface WaterMeterInfoMapper {
 
         @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterwell' ")
-        List<WaterMeterInfo> getWatermeterwellWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
+        List<WaterMeterInfo> getWaterMeterWellWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
 
         @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterroom' ")
         List<WaterMeterInfo> getWatermeterRoomWaterMeterInfoByWallId(@Param("wallId") Integer wallId);

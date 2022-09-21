@@ -4,7 +4,6 @@ import com.zhy.market.domain.RepairInfo;
 import com.zhy.market.domain.WaterMeterInfo;
 import com.zhy.market.mapper.FireHydrantMapper;
 import com.zhy.market.mapper.WaterMeterInfoMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,7 +28,6 @@ public class FireHydrantController {
     @GetMapping("getFireHydrantInfoById")
     public Object getFireHydrantInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
-        System.out.println("getFireHydrantInfoById FireHydrant" + id);
         return getJsonRes(0, "获得消防栓信息成功", fireHydrantMapper.getFireHydrantRepairInfoById(id));
     }
 
@@ -49,15 +47,11 @@ public class FireHydrantController {
     @GetMapping("getFireHydrantRepairInfoById")
     public Object getFireHydrantRepairInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
-        System.out.println("getFireHydrantRepairInfoById FireHydrant" + id);
         return getJsonRes(0, "获得消防栓维修信息成功", fireHydrantMapper.getFireHydrantRepairInfoById(id));
     }
 
     @PostMapping("insertFireHydrantWaterMeterInfo")
     public Object insertFireHydrantWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
-
-        System.out.println("insertFireHydrantWaterMeterInfo");
-
         Integer res = waterMeterInfoMapper.insertFireHydrantWaterMeterInfo(waterMeterInfo.waterMeterId, waterMeterInfo.wallId, waterMeterInfo.paymentNumber,
                 waterMeterInfo.accountNumber, waterMeterInfo.accountName, waterMeterInfo.status, waterMeterInfo.updateTime);
 
@@ -67,8 +61,6 @@ public class FireHydrantController {
     @GetMapping("getFireHydrantWaterMeterInfoByWallId")
     public Object getWaterMeterInfoById(HttpServletRequest request) {
         Integer wallId = Integer.valueOf(request.getParameter("wallId"));
-        System.out.println("getFireHydrantWaterMeterInfoByWallId" + wallId);
-//        System.out.println(waterMeterInfoMapper.getWaterMeterWellWaterMeterInfoByWallId(wallId));
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getFireHydrantWaterMeterInfoByWallId(wallId));
     }
 }

@@ -4,9 +4,9 @@ import com.zhy.market.domain.RepairInfo;
 import com.zhy.market.domain.WaterMeterInfo;
 import com.zhy.market.mapper.WaterMeterInfoMapper;
 import com.zhy.market.mapper.WaterMeterRoomMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.zhy.market.controller.utils.getJsonRes;
@@ -15,9 +15,9 @@ import static com.zhy.market.controller.utils.getJsonRes;
 @RequestMapping("WaterMeterRoom")
 public class WaterMeterRoomController {
 
-    @Autowired
+    @Resource
     private WaterMeterInfoMapper waterMeterInfoMapper;
-    @Autowired
+    @Resource
     private WaterMeterRoomMapper waterMeterRoomMapper;
 
     @GetMapping("getAllWaterMeterRoomInfo")
@@ -42,13 +42,11 @@ public class WaterMeterRoomController {
     @GetMapping("getWaterMeterRoomRepairInfoById")
     public Object getWaterMeterRoomRepairInfoById(HttpServletRequest request) {
         Integer id = Integer.valueOf(request.getParameter("id"));
-        System.out.println("getRepairInfoById WaterMeterRoom" + id);
         return getJsonRes(0, "获得维修记录成功", waterMeterRoomMapper.getWaterMeterRoomRepairInfoById(id));
     }
 
     @PostMapping("insertWaterMeterRoomWaterMeterInfo")
     public Object insertWaterMeterRoomWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
-        System.out.println("WaterMeterRoomWaterMeterId " + waterMeterInfo.waterMeterId);
         Integer res = waterMeterInfoMapper.insertWaterMeterRoomInfoWaterMeterInfo(waterMeterInfo.waterMeterId, waterMeterInfo.wallId, waterMeterInfo.paymentNumber,
                 waterMeterInfo.accountNumber, waterMeterInfo.accountName, waterMeterInfo.status, waterMeterInfo.updateTime);
 
@@ -58,8 +56,6 @@ public class WaterMeterRoomController {
     @GetMapping("getWaterMeterRoomWaterMeterInfoByWallId")
     public Object getWaterMeterRoomWaterMeterInfoById(HttpServletRequest request) {
         Integer wallId = Integer.valueOf(request.getParameter("wallId"));
-        System.out.println("getWaterMeterByWallId" + wallId);
-//        System.out.println(waterMeterInfoMapper.getWatermeterRoomWaterMeterInfoByWallId(wallId));
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getWatermeterRoomWaterMeterInfoByWallId(wallId));
     }
 }
