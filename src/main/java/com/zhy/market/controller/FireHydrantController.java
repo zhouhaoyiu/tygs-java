@@ -53,7 +53,7 @@ public class FireHydrantController {
     @PostMapping("insertFireHydrantWaterMeterInfo")
     public Object insertFireHydrantWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
         Integer res = waterMeterInfoMapper.insertFireHydrantWaterMeterInfo(waterMeterInfo.waterMeterId, waterMeterInfo.wallId, waterMeterInfo.paymentNumber,
-                waterMeterInfo.accountNumber, waterMeterInfo.accountName, waterMeterInfo.status, waterMeterInfo.updateTime);
+                waterMeterInfo.accountNumber, waterMeterInfo.accountName, waterMeterInfo.nature, waterMeterInfo.updateTime);
 
         return getJsonRes(0, "test", res.toString());
     }
@@ -62,5 +62,16 @@ public class FireHydrantController {
     public Object getWaterMeterInfoById(HttpServletRequest request) {
         Integer wallId = Integer.valueOf(request.getParameter("wallId"));
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getFireHydrantWaterMeterInfoByWallId(wallId));
+    }
+
+    @GetMapping("deleteWaterMeterInfoById")
+    public Object deleteWaterMeterInfoById(HttpServletRequest request) {
+        String waterMeterId = request.getParameter("waterMeterId");
+        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "1");
+        if (res == 1) {
+            return getJsonRes(0, "删除水表信息成功");
+        } else {
+            return getJsonRes(1, "删除水表信息失败");
+        }
     }
 }

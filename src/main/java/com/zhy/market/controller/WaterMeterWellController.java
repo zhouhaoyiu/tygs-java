@@ -55,8 +55,10 @@ public class WaterMeterWellController {
 
     @PostMapping("insertWaterMeterWellWaterMeterInfo")
     public Object insertWaterMeterWellWaterMeterInfo(@RequestBody WaterMeterInfo waterMeterInfo) {
-        Integer res = waterMeterInfoMapper.insertWaterMeterWellWaterMeterInfo(waterMeterInfo.waterMeterId, waterMeterInfo.wallId, waterMeterInfo.paymentNumber,
-                waterMeterInfo.accountNumber, waterMeterInfo.accountName, waterMeterInfo.status, waterMeterInfo.updateTime);
+        Integer res = waterMeterInfoMapper.insertWaterMeterWellWaterMeterInfo(waterMeterInfo.waterMeterId,
+                waterMeterInfo.wallId, waterMeterInfo.paymentNumber,
+                waterMeterInfo.accountNumber, waterMeterInfo.accountName, waterMeterInfo.nature,
+                waterMeterInfo.updateTime);
 
         return getJsonRes(0, "test", res.toString());
     }
@@ -65,6 +67,17 @@ public class WaterMeterWellController {
     public Object getWaterMeterWellWaterMeterInfoByWallId(HttpServletRequest request) {
         Integer wallId = Integer.valueOf(request.getParameter("wallId"));
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getWaterMeterWellWaterMeterInfoByWallId(wallId));
+    }
+
+    @GetMapping("deleteWaterMeterInfoById")
+    public Object deleteWaterMeterInfoById(HttpServletRequest request) {
+        String waterMeterId = request.getParameter("waterMeterId");
+        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "1");
+        if (res == 1) {
+            return getJsonRes(0, "删除水表信息成功");
+        } else {
+            return getJsonRes(1, "删除水表信息失败");
+        }
     }
 
 }

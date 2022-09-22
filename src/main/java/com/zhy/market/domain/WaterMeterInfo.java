@@ -18,6 +18,8 @@ public class WaterMeterInfo {
     public String accountNumber;
     public String accountName;
     public String status;
+
+    public String nature;
     public String updateTime;
     public String waterMeterFrom;
 }
