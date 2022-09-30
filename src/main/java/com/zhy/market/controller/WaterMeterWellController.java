@@ -1,15 +1,21 @@
 package com.zhy.market.controller;
 
-import com.zhy.market.domain.RepairInfo;
-import com.zhy.market.domain.WaterMeterInfo;
-import com.zhy.market.mapper.WaterMeterInfoMapper;
-import com.zhy.market.mapper.WaterMeterWellMapper;
-import org.springframework.web.bind.annotation.*;
+import static com.zhy.market.controller.utils.getJsonRes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import static com.zhy.market.controller.utils.getJsonRes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.zhy.market.domain.RepairInfo;
+import com.zhy.market.domain.WaterMeterInfo;
+import com.zhy.market.domain.Watermeterwell;
+import com.zhy.market.mapper.WaterMeterInfoMapper;
+import com.zhy.market.mapper.WaterMeterWellMapper;
 
 @RestController
 @RequestMapping("WaterMeterWell")
@@ -23,6 +29,24 @@ public class WaterMeterWellController {
     @GetMapping("getAllWaterMeterWellInfo")
     public Object getAllInfo() {
         return watermeterwellMapper.getAllWaterMeterWellInfo();
+    }
+
+    @PostMapping("addWaterMeterWell")
+    public Object addWaterMeterWell(@RequestBody Watermeterwell watermeterwell, HttpServletRequest request) {
+        Integer res = watermeterwellMapper.addWaterMeterWell(watermeterwell.filledBy, watermeterwell.department,
+                watermeterwell.writtingTime, watermeterwell.userType, watermeterwell.accountIdentifier,
+                watermeterwell.accountName, watermeterwell.accountNumber, watermeterwell.address,
+                watermeterwell.coordinates, watermeterwell.caliber, watermeterwell.wellDepth,
+                watermeterwell.includedFacilities, watermeterwell.waterMeterManufacturer,
+                watermeterwell.operatingStatus, watermeterwell.wellOutside, watermeterwell.wellInside,
+                watermeterwell.waterNature, watermeterwell.operatingUsersNumber,
+                watermeterwell.operatingUserDetailsAndDetailedAddress, watermeterwell.specialBankUsersNumber,
+                watermeterwell.specialBankUserDetailsAndDetailedAddress);
+        if (res == 1) {
+            return getJsonRes(0, "添加成功");
+        } else {
+            return getJsonRes(1, "添加失败");
+        }
     }
 
     @PostMapping("updateWaterMeterWellRepairInfoWithId")

@@ -8,13 +8,15 @@
 
 package com.zhy.market.mapper;
 
-import com.zhy.market.domain.Watermeterwell;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.zhy.market.domain.Watermeterwell;
 
 @Repository
 public interface WaterMeterWellMapper {
@@ -32,5 +34,51 @@ public interface WaterMeterWellMapper {
 
     @Select("select repairInfo from watermeterwell where id = #{id}")
     String getWaterMeterWellRepairInfoById(@Param("id") Integer id);
-}
 
+    // @Insert("insert into watermeterwell set ")
+
+    // 在watermeterwell表中插入一条数据
+    @Insert("insert into watermeterwell set" +
+            " filledBy = #{filledBy}," +
+            " department = #{department}," +
+            " writtingTime = #{writtingTime}," +
+            " userType = #{userType}," +
+            " accountIdentifier = #{accountIdentifier}," +
+            " accountName = #{accountName}," +
+            " accountNumber = #{accountNumber}," +
+            " address = #{address}," +
+            " coordinates = #{coordinates}," +
+            " caliber = #{caliber}," +
+            " wellDepth = #{wellDepth}," +
+            " includedFacilities = #{includedFacilities}," +
+            " waterMeterManufacturer = #{waterMeterManufacturer}," +
+            " operatingStatus = #{operatingStatus}," +
+            " wellOutside = #{wellOutside}," +
+            " wellInside = #{wellInside}," +
+            " waterNature = #{waterNature}," +
+            " operatingUsersNumber = #{operatingUsersNumber}," +
+            " operatingUserDetailsAndDetailedAddress = #{operatingUserDetailsAndDetailedAddress}," +
+            " specialBankUsersNumber = #{specialBankUsersNumber}," +
+            " specialBankUserDetailsAndDetailedAddress = #{specialBankUserDetailsAndDetailedAddress},")
+    Integer addWaterMeterWell(@Param("filledBy") String filledBy,
+            @Param("department") String department,
+            @Param("writtingTime") String writtingTime,
+            @Param("userType") String userType,
+            @Param("accountIdentifier") String accountIdentifier,
+            @Param("accountName") String accountName,
+            @Param("accountNumber") String accountNumber,
+            @Param("address") String address,
+            @Param("coordinates") String Coordinates,
+            @Param("caliber") String caliber,
+            @Param("wellDepth") String WellDepth,
+            @Param("includedFacilities") String includedFacilities,
+            @Param("waterMeterManufacturer") String waterMeterManufacturer,
+            @Param("operatingStatus") String operatingStatus,
+            @Param("wellOutside") String wellOutside,
+            @Param("wellInside") String wellInside,
+            @Param("waterNature") String waterNature,
+            @Param("operatingUsersNumber") String operatingUsersNumber,
+            @Param("operatingUserDetailsAndDetailedAddress") String operatingUserDetailsAndDetailedAddress,
+            @Param("specialBankUsersNumber") String specialBankUsersNumber,
+            @Param("specialBankUserDetailsAndDetailedAddress") String specialBankUserDetailsAndDetailedAddress);
+}

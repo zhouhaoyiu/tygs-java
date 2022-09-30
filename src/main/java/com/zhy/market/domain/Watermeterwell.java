@@ -35,4 +35,5 @@ public class Watermeterwell {
     public String specialBankUsersNumber;
     public String specialBankUserDetailsAndDetailedAddress;
     public String repairInfo;
+    public String status; // 状态
 }

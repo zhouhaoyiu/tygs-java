@@ -29,5 +29,5 @@ public class WaterMeterRoom {
     public String wallInside;
     public String personLiable;
     public String repairInfo;
-
+    public String status; // 状态
 }

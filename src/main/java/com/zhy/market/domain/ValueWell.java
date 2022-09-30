@@ -25,4 +25,5 @@ public class ValueWell {
   public String repairTime; // 维修时间
   public String photosOutsideTheWell; // 井外照片
   public String repairInfo;
+  public String status; // 状态
 }
