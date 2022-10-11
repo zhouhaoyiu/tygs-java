@@ -42,7 +42,7 @@ public class WaterMeterWellController {
     public Object addWaterMeterWell(@RequestBody Watermeterwell watermeterwell, HttpServletRequest request) {
         Integer res = watermeterwellMapper.addWaterMeterWell(watermeterwell.filledBy, watermeterwell.accountName, watermeterwell.accountNumber, watermeterwell.address,
                 watermeterwell.coordinates, watermeterwell.caliber, watermeterwell.operatingStatus, watermeterwell.waterNature, watermeterwell.wellDepth,
-                watermeterwell.includedFacilities, watermeterwell.waterMeterManufacturer, watermeterwell.accountIdentifier);
+                watermeterwell.includedFacilities, watermeterwell.waterMeterManufacturer, watermeterwell.accountIdentifier,watermeterwell.writtingTime);
         if (res == 1) {
             return getJsonRes(0, "添加成功");
         } else {
@@ -89,7 +89,7 @@ public class WaterMeterWellController {
     @GetMapping("deleteWaterMeterInfoById")
     public Object deleteWaterMeterInfoById(HttpServletRequest request) {
         String waterMeterId = request.getParameter("waterMeterId");
-        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "1");
+        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
         if (res == 1) {
             return getJsonRes(0, "删除水表信息成功");
         } else {

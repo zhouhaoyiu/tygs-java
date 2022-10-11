@@ -19,11 +19,14 @@ import java.util.List;
 
 @Repository
 public interface WaterMeterWellMapper {
-    @Select("select * from watermeterwell")
+    @Select("select * from watermeterwell where status = '1'")
     List<Watermeterwell> getAllWaterMeterWellInfo();
 
-    @Select("select count(*) from watermeterwell")
+    @Select("select count(*) from watermeterwell where status = '1'")
     Integer getAllWaterMeterWellInfoCount();
+
+    @Update("update watermeterwell set status = '2' where id = #{id}")
+    Integer deleteWaterMeterWell(@Param("id")String id);
 
     @Select("select * from watermeterwell where FilledBy like #{FilledBy}")
     List<Watermeterwell> getWaterMeterWellInfoByFilled();
@@ -40,7 +43,7 @@ public interface WaterMeterWellMapper {
     @Insert("insert into watermeterwell set" +
             " filledBy = #{filledBy}," +
             " department = ''," +
-            " writtingTime = ''," +
+            " writtingTime = #{writtingTime}," +
             " userType = ''," +
             " accountIdentifier = #{accountIdentifier}," +
             " accountName = #{accountName}," +
@@ -70,5 +73,6 @@ public interface WaterMeterWellMapper {
                               @Param("wellDepth") String wellDepth,
                               @Param("includedFacilities") String includedFacilities,
                               @Param("waterMeterManufacturer") String waterMeterManufacturer,
-                              @Param("accountIdentifier") String accountIdentifier);
+                              @Param("accountIdentifier") String accountIdentifier,
+                              @Param("writtingTime")String writtingTime);
 }

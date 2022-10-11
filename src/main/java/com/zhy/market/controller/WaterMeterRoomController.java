@@ -62,7 +62,7 @@ public class WaterMeterRoomController {
     @GetMapping("deleteWaterMeterInfoById")
     public Object deleteWaterMeterInfoById(HttpServletRequest request) {
         String waterMeterId = request.getParameter("waterMeterId");
-        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "1");
+        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
         if (res == 1) {
             return getJsonRes(0, "删除水表信息成功");
         } else {

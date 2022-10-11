@@ -12,31 +12,31 @@ import java.util.List;
 @Repository
 public interface WaterMeterInfoMapper {
 
-    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterwell' and status = 0")
+    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterwell' and status = 1")
     List<WaterMeterInfo> getWaterMeterWellWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
 
-    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterroom' and status = 0")
+    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'watermeterroom' and status = 1")
     List<WaterMeterInfo> getWatermeterRoomWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
 
-    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'valuewell' and status = 0")
+    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'valuewell' and status = 1")
     List<WaterMeterInfo> getValueWellWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
 
-    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'firehydrant' and status = 0")
+    @Select("select * from watermeterinfo where wallId = #{wallId} and waterMeterFrom = 'firehydrant' and status = 1")
     List<WaterMeterInfo> getFireHydrantWaterMeterInfoByWallId(@Param("wallId") Integer wallId);
 
-    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,nature,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},'0',#{nature},#{updateTime},'watermeterwell')")
+    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,nature,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},'1',#{nature},#{updateTime},'watermeterwell')")
     Integer insertWaterMeterWellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
             String accountNumber, String accountName, String nature, String updateTime);
 
-    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,nature,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},'0',#{nature},#{updateTime},'watermeterroom')")
+    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,nature,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},'1',#{nature},#{updateTime},'watermeterroom')")
     Integer insertWaterMeterRoomInfoWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
             String accountNumber, String accountName, String nature, String updateTime);
 
-    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,nature,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},'0',#{nature},#{updateTime},'valuewell')")
+    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,nature,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},'1',#{nature},#{updateTime},'valuewell')")
     Integer insertValueWellWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
             String accountNumber, String accountName, String nature, String updateTime);
 
-    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,nature,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},'0',#{nature},#{updateTime},'firehydrant')")
+    @Insert("insert into watermeterinfo(waterMeterId,wallId,paymentNumber,accountNumber,accountName,status,nature,updateTime,waterMeterFrom) values(#{waterMeterId},#{wallId},#{paymentNumber},#{accountNumber},#{accountName},'1',#{nature},#{updateTime},'firehydrant')")
     Integer insertFireHydrantWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
             String accountNumber, String accountName, String nature, String updateTime);
 
