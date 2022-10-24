@@ -64,7 +64,8 @@ public class FireHydrantController {
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getFireHydrantWaterMeterInfoByWallId(wallId));
     }
 
-    @GetMapping("deleteWaterMeterInfoById")
+    @GetMapping("del" +
+            "eteWaterMeterInfoById")
     public Object deleteWaterMeterInfoById(HttpServletRequest request) {
         String waterMeterId = request.getParameter("waterMeterId");
         Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
