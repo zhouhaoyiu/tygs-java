@@ -4,6 +4,9 @@ import net.sf.json.JSONObject;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 public class utils {
     public static <E> Object getJsonRes(Integer code, String msg, List<E> data) {
         JSONObject json = new JSONObject();

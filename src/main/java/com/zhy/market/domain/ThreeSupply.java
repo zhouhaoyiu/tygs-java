@@ -6,7 +6,6 @@ import lombok.Data;
  * @author Administrator
  */
 @Data
-public class RepairInfo {
-    public String repairInfo;
+public class ThreeSupply {
     public Integer id;
 }

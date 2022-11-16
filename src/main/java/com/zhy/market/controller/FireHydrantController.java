@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import static com.zhy.market.controller.utils.getJsonRes;
 
+/**
+ * @author Administrator
+ */
 @RestController
 @RequestMapping("FireHydrant")
 public class FireHydrantController {

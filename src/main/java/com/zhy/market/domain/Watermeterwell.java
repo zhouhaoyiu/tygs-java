@@ -10,6 +10,9 @@ package com.zhy.market.domain;
 
 import lombok.Data;
 
+/**
+ * @author Administrator
+ */
 @Data
 public class Watermeterwell {
     public Integer id;

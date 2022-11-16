@@ -11,6 +11,9 @@ import java.util.UUID;
 
 import static com.zhy.market.controller.utils.getJsonRes;
 
+/**
+ * @author Administrator
+ */
 @RestController
 @RequestMapping("adminLog")
 public class AdminLogController {

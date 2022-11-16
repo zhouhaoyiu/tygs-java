@@ -94,7 +94,6 @@ public class AdminController {
             String firstLetter = fieldName.substring(0, 1).toUpperCase();
             String getter = "get" + firstLetter + fieldName.substring(1);
             Method methodG = o.getClass().getMethod(getter);
-//            Method methodS = o.getClass().getMethod(setter, new Class[]{});
             return methodG.invoke(o);
         } catch (Exception e) {
             return null;
@@ -105,8 +104,9 @@ public class AdminController {
     public Object adminRegis(HttpServletRequest ignoredRequest, @RequestBody Admin userRegisInfo) {
         String pin = userRegisInfo.pin;
         String userName = userRegisInfo.userName;
+        String pinShould = "574601**";
 
-        if (!Objects.equals(pin, "574601**")) { //pin
+        if (!Objects.equals(pin, pinShould)) {
             JSONObject json = new JSONObject();
             json.put("code", "1");
             json.put("msg", "pin码错误");
@@ -148,7 +148,7 @@ public class AdminController {
         return json;
     }
 
-    @GetMapping ("deleteAdmin")
+    @GetMapping("deleteAdmin")
     public Object deleteAdmin(HttpServletRequest request) {
         String adminUUid = request.getParameter("adminUUid");
 

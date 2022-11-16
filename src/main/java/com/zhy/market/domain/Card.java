@@ -2,6 +2,9 @@ package com.zhy.market.domain;
 
 import lombok.Data;
 
+/**
+ * @author Administrator
+ */
 @Data
 public class Card {
     public Integer id;

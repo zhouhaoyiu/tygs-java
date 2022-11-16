@@ -3,6 +3,9 @@ package com.zhy.market.domain;
 
 import lombok.Data;
 
+/**
+ * @author Administrator
+ */
 @Data
 public class Sheet1 {
     public String jfh;
