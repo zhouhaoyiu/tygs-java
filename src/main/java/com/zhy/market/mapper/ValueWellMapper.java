@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import com.zhy.market.domain.ValueWell;
 
+/**
+ * @author Administrator
+ */
 @Repository
 public interface ValueWellMapper {
 

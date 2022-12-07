@@ -17,6 +17,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 @Repository
 public interface WaterMeterWellMapper {
     @Select("select * from watermeterwell where status = '1'")

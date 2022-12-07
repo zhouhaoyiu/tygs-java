@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ */
 @Repository
 public interface AdminMapper {
     @Select("select userName,emailAddress,adminUUid,phoneNumber,adminRole from admin")

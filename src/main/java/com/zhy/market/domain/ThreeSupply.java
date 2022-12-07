@@ -7,5 +7,9 @@ import lombok.Data;
  */
 @Data
 public class ThreeSupply {
-    public Integer id;
+    public Integer infoId;
+    public String jfh;
+    public String cbh;
+    public String mc;
+
 }

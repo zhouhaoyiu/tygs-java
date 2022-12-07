@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import com.zhy.market.domain.FireHydrant;
 
+/**
+ * @author Administrator
+ */
 @Repository
 public interface FireHydrantMapper {
 
