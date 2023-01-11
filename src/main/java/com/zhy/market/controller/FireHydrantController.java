@@ -30,16 +30,16 @@ public class FireHydrantController {
 
     @GetMapping("getFireHydrantInfoById")
     public Object getFireHydrantInfoById(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("id"));
+        int id = Integer.valueOf(request.getParameter("id"));
         return getJsonRes(0, "获得消防栓信息成功", fireHydrantMapper.getFireHydrantRepairInfoById(id));
     }
 
     @GetMapping("updateFireHydrantRepairInfoWithId")
     public Object updateFireHydrantRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
         String repairInfoText = repairInfo.repairInfo;
-        Integer id = repairInfo.id;
+        int id = repairInfo.id;
 
-        Integer res = fireHydrantMapper.updateFireHydrantRepairInfoWithId(repairInfoText, id);
+        int res = fireHydrantMapper.updateFireHydrantRepairInfoWithId(repairInfoText, id);
         if (res == 1) {
             return getJsonRes(0, "更新维修记录成功");
         } else {

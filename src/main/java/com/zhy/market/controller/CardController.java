@@ -23,9 +23,14 @@ public class CardController {
 
     @PostMapping("addCard")
     public Object addCard(@RequestBody Card card) {
-        return cardMapper.addCard(card.getSsmc(), card.getGgxh(), card.getSyzt(), card.getSsgx(), card.getJsbh(),
-                card.getJslx(), card.getJszb(), card.getYxzt(), card.getJsqk(), card.getKgfx(), card.getXdwz(),
-                card.getJs(), card.getSccj(), card.getAzsj());
+        return cardMapper.addCard(card.getSsmc(), card.getGgxh(), card.getSyzt(),
+                card.getSsgx(), card.getJsbh(),
+                card.getJslx(), card.getJszb(),
+                card.getYxzt(), card.getJsqk(),
+                card.getKgfx(), card.getXdwz(),
+                card.getJs(), card.getSccj(),
+                card.getAzsj()
+        );
     }
 
     @GetMapping("getAllCard")

@@ -7,6 +7,9 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * @author Administrator
+ */
 @MapperScan("com.zhy.market.mapper")
 @SpringBootApplication()
 public class MarketApplication {

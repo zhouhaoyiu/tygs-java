@@ -29,9 +29,9 @@ public class WaterMeterRoomController {
     public Object updateWaterMeterRoomRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
 
         String repairInfoText = repairInfo.repairInfo;
-        Integer id = repairInfo.id;
+        int id = repairInfo.id;
 
-        Integer res = waterMeterRoomMapper.updateWaterMeterRoomRepairInfoWithId(repairInfoText, id);
+        int res = waterMeterRoomMapper.updateWaterMeterRoomRepairInfoWithId(repairInfoText, id);
         if (res == 1) {
             return getJsonRes(0, "更新维修记录成功");
         } else {
@@ -41,7 +41,7 @@ public class WaterMeterRoomController {
 
     @GetMapping("getWaterMeterRoomRepairInfoById")
     public Object getWaterMeterRoomRepairInfoById(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("id"));
+        int id = Integer.valueOf(request.getParameter("id"));
         return getJsonRes(0, "获得维修记录成功", waterMeterRoomMapper.getWaterMeterRoomRepairInfoById(id));
     }
 
@@ -62,7 +62,7 @@ public class WaterMeterRoomController {
     @GetMapping("deleteWaterMeterInfoById")
     public Object deleteWaterMeterInfoById(HttpServletRequest request) {
         String waterMeterId = request.getParameter("waterMeterId");
-        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
+        int res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
         if (res == 1) {
             return getJsonRes(0, "删除水表信息成功");
         } else {

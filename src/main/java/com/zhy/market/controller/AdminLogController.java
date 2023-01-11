@@ -29,7 +29,7 @@ public class AdminLogController {
         String info = adminLog.getInfo();
         String remark = adminLog.getRemark();
 
-        Integer addRes = adminLogMapper.addAdminLog(adminLogUUid, adminUUid, logTime, info, remark);
+        int addRes = adminLogMapper.addAdminLog(adminLogUUid, adminUUid, logTime, info, remark);
         if (addRes > 0) {
             return getJsonRes(1, "新增管理员日志成功", (List) null);
         }

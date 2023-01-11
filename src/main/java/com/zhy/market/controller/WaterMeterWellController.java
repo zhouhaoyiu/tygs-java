@@ -43,7 +43,7 @@ public class WaterMeterWellController {
     //    accountIdentifier: "",
     @PostMapping("addWaterMeterWell")
     public Object addWaterMeterWell(@RequestBody Watermeterwell watermeterwell, HttpServletRequest request) {
-        Integer res = watermeterwellMapper.addWaterMeterWell(watermeterwell.filledBy, watermeterwell.accountName, watermeterwell.accountNumber, watermeterwell.address,
+        int res = watermeterwellMapper.addWaterMeterWell(watermeterwell.filledBy, watermeterwell.accountName, watermeterwell.accountNumber, watermeterwell.address,
                 watermeterwell.coordinates, watermeterwell.caliber, watermeterwell.operatingStatus, watermeterwell.waterNature, watermeterwell.wellDepth,
                 watermeterwell.includedFacilities, watermeterwell.waterMeterManufacturer, watermeterwell.accountIdentifier,watermeterwell.writtingTime);
         if (res == 1) {
@@ -56,9 +56,9 @@ public class WaterMeterWellController {
     @PostMapping("updateWaterMeterWellRepairInfoWithId")
     public Object updateWaterMeterWellRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
         String repairInfoText = repairInfo.repairInfo;
-        Integer id = repairInfo.id;
+        int id = repairInfo.id;
 
-        Integer res = watermeterwellMapper.updateWaterMeterWellRepairInfoWithId(repairInfoText, id);
+        int res = watermeterwellMapper.updateWaterMeterWellRepairInfoWithId(repairInfoText, id);
         if (res == 1) {
             return getJsonRes(0, "更新维修记录成功");
         } else {
@@ -68,7 +68,7 @@ public class WaterMeterWellController {
 
     @GetMapping("getWaterMeterWellRepairInfoById")
     public Object getWaterMeterWellRepairInfoById(HttpServletRequest request) {
-        Integer id = Integer.valueOf(request.getParameter("id"));
+        int id = Integer.valueOf(request.getParameter("id"));
 
         return getJsonRes(0, "获得维修记录成功", watermeterwellMapper.getWaterMeterWellRepairInfoById(id));
     }
@@ -85,14 +85,14 @@ public class WaterMeterWellController {
 
     @GetMapping("getWaterMeterWellWaterMeterInfoByWallId")
     public Object getWaterMeterWellWaterMeterInfoByWallId(HttpServletRequest request) {
-        Integer wallId = Integer.valueOf(request.getParameter("wallId"));
+        int wallId = Integer.valueOf(request.getParameter("wallId"));
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getWaterMeterWellWaterMeterInfoByWallId(wallId));
     }
 
     @GetMapping("deleteWaterMeterInfoById")
     public Object deleteWaterMeterInfoById(HttpServletRequest request) {
         String waterMeterId = request.getParameter("waterMeterId");
-        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
+        int res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
         if (res == 1) {
             return getJsonRes(0, "删除水表信息成功");
         } else {

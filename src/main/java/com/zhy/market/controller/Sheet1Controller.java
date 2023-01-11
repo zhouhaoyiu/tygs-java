@@ -15,29 +15,28 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 
 public class Sheet1Controller {
-
     @Resource
     private Sheet1Mapper sheet1Mapper;
 
     @GetMapping("getInfoByPage")
     public Object getAllInfo(HttpServletRequest request) {
-        Integer page = Integer.parseInt(request.getParameter("page"));
-        Integer size = 30;
-        Integer start = (page - 1) * size;
+        int page = Integer.parseInt(request.getParameter("page"));
+        int size = 30;
+        int start = (page - 1) * size;
         return sheet1Mapper.selectInfoByPage(start, size);
     }
 
     @GetMapping("getInfoByPageCount")
-    public Integer getAllInfoCount() {
+    public int getAllInfoCount() {
         return sheet1Mapper.selectInfoCount();
     }
 
     @GetMapping("getInfoByPageAndName")
     public Object getInfoByPageAndName(HttpServletRequest request) {
-        Integer page = Integer.parseInt(request.getParameter("page"));
+        int page = Integer.parseInt(request.getParameter("page"));
         String name = request.getParameter("mc");
-        Integer size = 30;
-        Integer start = (page - 1) * size;
+        int size = 30;
+        int start = (page - 1) * size;
         return sheet1Mapper.selectInfoByPageAndName(start, size, name);
     }
 
@@ -49,25 +48,25 @@ public class Sheet1Controller {
 
     @GetMapping("getInfoByPageAndJfh")
     public Object getInfoByPageAndJfh(HttpServletRequest request) {
-        Integer page = Integer.parseInt(request.getParameter("page"));
+        int page = Integer.parseInt(request.getParameter("page"));
         String jfh = request.getParameter("jfh");
-        Integer size = 30;
-        Integer start = (page - 1) * size;
+        int size = 30;
+        int start = (page - 1) * size;
         return sheet1Mapper.selectInfoByPageAndJfh(start, size, jfh);
     }
 
     @GetMapping("getInfoByPageAndJfhCount")
-    public Integer getInfoByPageAndJfhCount(HttpServletRequest request) {
+    public int getInfoByPageAndJfhCount(HttpServletRequest request) {
         String jfh = request.getParameter("jfh");
         return sheet1Mapper.selectInfoByPageAndJfhCount(jfh);
     }
 
     @GetMapping("getInfoByPageAndHh")
     public Object getInfoByPageAndHh(HttpServletRequest request) {
-        Integer page = Integer.parseInt(request.getParameter("page"));
+        int page = Integer.parseInt(request.getParameter("page"));
         String hh = request.getParameter("hh");
-        Integer size = 30;
-        Integer start = (page - 1) * size;
+        int size = 30;
+        int start = (page - 1) * size;
         return sheet1Mapper.selectInfoByPageAndHh(start, size, hh);
     }
 
@@ -79,19 +78,16 @@ public class Sheet1Controller {
 
     @GetMapping("getInfoByPageAndXxdz")
     public Object getInfoByPageAndXxdz(HttpServletRequest request) {
-        Integer page = Integer.parseInt(request.getParameter("page"));
+        int page = Integer.parseInt(request.getParameter("page"));
         String xxdz = request.getParameter("xxdz");
-        Integer size = 30;
-        Integer start = (page - 1) * size;
+        int size = 30;
+        int start = (page - 1) * size;
         return sheet1Mapper.selectInfoByPageAndXxdz(start, size, xxdz);
     }
 
     @GetMapping("getInfoByPageAndXxdzCount")
-    public Integer getInfoByPageAndXxdzCount(HttpServletRequest request) {
+    public int getInfoByPageAndXxdzCount(HttpServletRequest request) {
         String xxdz = request.getParameter("xxdz");
         return sheet1Mapper.selectInfoByPageAndXxdzCount(xxdz);
     }
-
-
-
 }
