@@ -5,6 +5,7 @@ import com.zhy.market.domain.AdminInfo;
 import com.zhy.market.mapper.AdminMapper;
 import com.zhy.market.mapper.RsaKeyMapper;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.annotation.Resource;
@@ -24,12 +25,42 @@ import java.util.UUID;
 @RestController
 public class AdminController {
     private final AdminMapper adminMapper;
+    private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     @Resource
     private RsaKeyMapper rsaKeyMapper;
 
     public AdminController(AdminMapper adminMapper) {
         this.adminMapper = adminMapper;
+    }
+
+    private java.util.Map<String, Object> unauthorized() {
+        java.util.Map<String, Object> json = new java.util.HashMap<>();
+        json.put("code", "1");
+        json.put("msg", "未授权");
+        return json;
+    }
+
+    private boolean isAdminAuthorized(HttpServletRequest request) {
+        String token = System.getenv("ADMIN_API_TOKEN");
+        return token != null && !token.isBlank() && Objects.equals(token, request.getHeader("X-Admin-Token"));
+    }
+
+    private String decryptPassword(String encryptedPassword) throws Exception {
+        String privateKey = rsaKeyMapper.getPrivateKey();
+        byte[] sentPassWord = Base64.decodeBase64(encryptedPassword.getBytes(StandardCharsets.UTF_8));
+        byte[] decoded = Base64.decodeBase64(privateKey);
+
+        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA")
+                .generatePrivate(new PKCS8EncodedKeySpec(decoded));
+
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, priKey);
+        return new String(cipher.doFinal(sentPassWord));
+    }
+
+    private boolean isBcryptHash(String value) {
+        return value != null && (value.startsWith("$2a$") || value.startsWith("$2b$") || value.startsWith("$2y$"));
     }
 
     @PostMapping("adminLogin")
@@ -47,22 +78,11 @@ public class AdminController {
         }
         Object info = list.get(0);
 
-
-        String privateKey = rsaKeyMapper.getPrivateKey();
-        // 64位解码加密后的字符串
-        byte[] sentPassWord = Base64.decodeBase64(passWord.getBytes(StandardCharsets.UTF_8));
-        byte[] getPassWord = Base64.decodeBase64(((String) Objects.requireNonNull(getFieldValueByName("passWord", info))).getBytes(StandardCharsets.UTF_8));
-        // base64编码的私钥
-        byte[] decoded = Base64.decodeBase64(privateKey);
-
-        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA")
-                .generatePrivate(new PKCS8EncodedKeySpec(decoded));
-
-        // RSA解密
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, priKey);
-        String outSentPassWord = new String(cipher.doFinal(sentPassWord));
-        String outGetPassWord = new String(cipher.doFinal(getPassWord));
+        String outSentPassWord = decryptPassword(passWord);
+        String storedPassWord = (String) Objects.requireNonNull(getFieldValueByName("passWord", info));
+        boolean passwordMatches = isBcryptHash(storedPassWord)
+                ? PASSWORD_ENCODER.matches(outSentPassWord, storedPassWord)
+                : outSentPassWord.equals(decryptPassword(storedPassWord));
 
         List<String> fields = new ArrayList<>();
 
@@ -73,7 +93,7 @@ public class AdminController {
         fields.add("phoneNumber");
         fields.add("userName");
 
-        if (outGetPassWord.equals(outSentPassWord)) {
+        if (passwordMatches) {
             json.put("code", "0");
             json.put("msg", "登陆成功");
             java.util.Map<String, Object> data = new java.util.HashMap<>();
@@ -100,7 +120,7 @@ public class AdminController {
     }
 
     @PostMapping("adminRegis")
-    public Object adminRegis(HttpServletRequest ignoredRequest, @RequestBody Admin userRegisInfo) {
+    public Object adminRegis(HttpServletRequest ignoredRequest, @RequestBody Admin userRegisInfo) throws Exception {
         String pin = userRegisInfo.pin;
         String userName = userRegisInfo.userName;
         String pinShould = System.getenv("ADMIN_REGISTRATION_PIN");
@@ -120,7 +140,7 @@ public class AdminController {
             String emailAddress = userRegisInfo.emailAddress;
             String phoneNumber = userRegisInfo.phoneNumber;
             UUID uuid = UUID.randomUUID();
-            int result = adminMapper.adminRegis(userName, passWord, emailAddress, phoneNumber, uuid.toString(), 1);
+            int result = adminMapper.adminRegis(userName, PASSWORD_ENCODER.encode(decryptPassword(passWord)), emailAddress, phoneNumber, uuid.toString(), 1);
             java.util.Map<String, Object> json = new java.util.HashMap<>();
             if (result == 1) {
                 json.put("code", "0");
@@ -135,20 +155,21 @@ public class AdminController {
 
     @GetMapping("getAllAdminsInfo")
     public Object getAllAdminsInfo(HttpServletRequest request) {
-        int role = Integer.parseInt(request.getParameter("adminRole"));
-
+        if (!isAdminAuthorized(request)) {
+            return unauthorized();
+        }
         List<AdminInfo> adminList = adminMapper.getAllAdminsInfo();
         java.util.Map<String, Object> json = new java.util.HashMap<>();
-        if (role == 0) {
-            json.put("code", "0");
-            json.put("data", adminList);
-        }
-
+        json.put("code", "0");
+        json.put("data", adminList);
         return json;
     }
 
     @GetMapping("deleteAdmin")
     public Object deleteAdmin(HttpServletRequest request) {
+        if (!isAdminAuthorized(request)) {
+            return unauthorized();
+        }
         String adminUUid = request.getParameter("adminUUid");
 
         int deleteCount = adminMapper.deleteAdmin(adminUUid);
