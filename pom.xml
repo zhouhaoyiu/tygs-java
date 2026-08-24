@@ -26,7 +26,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>4.1.0</version>
+            <version>4.1.1</version>
             <exclusions><!-- 去掉springboot默认配置 -->
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
