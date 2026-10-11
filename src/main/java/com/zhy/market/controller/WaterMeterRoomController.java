@@ -14,6 +14,8 @@ import static com.zhy.market.controller.utils.getJsonRes;
 @RestController
 @RequestMapping("WaterMeterRoom")
 public class WaterMeterRoomController {
+    @Resource private com.zhy.market.security.MeterActions meterActions;
+    @Resource private com.zhy.market.security.RepairActions repairActions;
 
     @Resource
     private WaterMeterInfoMapper waterMeterInfoMapper;
@@ -26,17 +28,9 @@ public class WaterMeterRoomController {
     }
 
     @PostMapping("updateWaterMeterRoomRepairInfoWithId")
-    public Object updateWaterMeterRoomRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
-
-        String repairInfoText = repairInfo.repairInfo;
-        int id = repairInfo.id;
-
-        int res = waterMeterRoomMapper.updateWaterMeterRoomRepairInfoWithId(repairInfoText, id);
-        if (res == 1) {
-            return getJsonRes(0, "更新维修记录成功");
-        } else {
-            return getJsonRes(1, "更新维修记录失败");
-        }
+    public Object updateWaterMeterRoomRepairInfoWithId(@RequestBody RepairInfo input, HttpServletRequest request) {
+        repairActions.append(input,"watermeterroom",com.zhy.market.security.Sessions.user(request));
+        return getJsonRes(0,"维修记录已保存");
     }
 
     @GetMapping("getWaterMeterRoomRepairInfoById")
@@ -59,14 +53,9 @@ public class WaterMeterRoomController {
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getWatermeterRoomWaterMeterInfoByWallId(wallId));
     }
 
-    @GetMapping("deleteWaterMeterInfoById")
-    public Object deleteWaterMeterInfoById(HttpServletRequest request) {
-        String waterMeterId = request.getParameter("waterMeterId");
-        int res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
-        if (res == 1) {
-            return getJsonRes(0, "删除水表信息成功");
-        } else {
-            return getJsonRes(1, "删除水表信息失败");
-        }
+    @PostMapping("deleteWaterMeterInfoById")
+    public Object deleteWaterMeterInfoById(@RequestBody com.zhy.market.security.MeterActions.Retire input, HttpServletRequest request) {
+        meterActions.retire(input, "watermeterroom", com.zhy.market.security.Sessions.user(request));
+        return getJsonRes(0, "水表已停用");
     }
 }

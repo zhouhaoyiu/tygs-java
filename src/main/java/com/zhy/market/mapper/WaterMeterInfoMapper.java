@@ -43,6 +43,6 @@ public interface WaterMeterInfoMapper {
     Integer insertFireHydrantWaterMeterInfo(String waterMeterId, Integer wallId, String paymentNumber,
             String accountNumber, String accountName, String nature, String updateTime);
 
-    @Update("update watermeterinfo set status = #{status} where waterMeterId = #{waterMeterId}")
-    Integer updateWaterMeterInfoStatus(String waterMeterId, String status);
+    @Update("update watermeterinfo set status = '2' where waterMeterId = #{waterMeterId} and wallId = #{wallId} and waterMeterFrom = #{source} and status = '1'")
+    Integer retire(@Param("waterMeterId") String waterMeterId, @Param("wallId") Integer wallId, @Param("source") String source);
 }

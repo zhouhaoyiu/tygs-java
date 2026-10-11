@@ -1,189 +1,57 @@
 package com.zhy.market.controller;
-
 import com.zhy.market.domain.Admin;
-import com.zhy.market.domain.AdminInfo;
 import com.zhy.market.mapper.AdminMapper;
-import com.zhy.market.mapper.RsaKeyMapper;
-import org.apache.commons.codec.binary.Base64;
+import com.zhy.market.security.Sessions;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import jakarta.annotation.Resource;
-import javax.crypto.Cipher;
-import jakarta.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-
-@RequestMapping("admin")
 @RestController
+@RequestMapping("/admin")
 public class AdminController {
-    private final AdminMapper adminMapper;
-    private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
-
-    @Resource
-    private RsaKeyMapper rsaKeyMapper;
-
-    public AdminController(AdminMapper adminMapper) {
-        this.adminMapper = adminMapper;
+    private final AdminMapper admins;
+    private final Sessions sessions;
+    private static final BCryptPasswordEncoder HASH=new BCryptPasswordEncoder(12);
+    private final Map<String,long[]> attempts=new HashMap<>();
+    public AdminController(AdminMapper admins,Sessions sessions) { this.admins=admins;this.sessions=sessions; }
+    @PostMapping("/adminLogin")
+    public synchronized Object login(@RequestBody Admin input,HttpServletRequest request) {
+        long now=System.currentTimeMillis();
+        attempts.entrySet().removeIf(e->now-e.getValue()[0]>60000);
+        if(attempts.size()>10000) throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS);
+        long[] limit=attempts.computeIfAbsent(request.getRemoteAddr(),key->new long[]{now,0});
+        if(++limit[1]>10) throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS);
+        if(input.userName==null||input.passWord==null||input.userName.length()>128||input.passWord.length()>72) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        var rows=admins.adminLogin(input.userName);
+        Admin user=rows.isEmpty()?null:rows.get(0);
+        boolean valid=false;
+        try { valid=user!=null && user.passWord!=null && user.passWord.startsWith("$2") && HASH.matches(input.passWord,user.passWord); } catch(IllegalArgumentException ignored) {}
+        if(!valid) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"账号或密码错误");
+        var principal=new Sessions.User(user.adminUUid,user.userName,Integer.valueOf(0).equals(user.adminRole)?"admin":"staff");
+        String token=sessions.create(principal);
+        return Map.of("code","0","token",token,"data",Map.of("userName",user.userName,"adminUUid",user.adminUUid,"adminRole",user.adminRole,"adminId",user.adminId));
     }
-
-    private java.util.Map<String, Object> unauthorized() {
-        java.util.Map<String, Object> json = new java.util.HashMap<>();
-        json.put("code", "1");
-        json.put("msg", "未授权");
-        return json;
+    @PostMapping("/logout")
+    public void logout(HttpServletRequest request) { sessions.remove(request.getHeader("Authorization")); }
+    @GetMapping("/getAllAdminsInfo")
+    public Object users() { return Map.of("code","0","data",admins.getAllAdminsInfo()); }
+    @PostMapping("/adminRegis")
+    public Object create(@RequestBody Admin input) {
+        if(input.userName==null||input.userName.isBlank()||input.userName.length()>128||input.passWord==null||input.passWord.length()<12||input.passWord.getBytes(java.nio.charset.StandardCharsets.UTF_8).length>72) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        if(admins.checkUserName(input.userName)>0) throw new ResponseStatusException(HttpStatus.CONFLICT);
+        int result=admins.adminRegis(input.userName,HASH.encode(input.passWord),Objects.toString(input.emailAddress,""),Objects.toString(input.phoneNumber,""),UUID.randomUUID().toString(),1);
+        if(result!=1) throw new ResponseStatusException(HttpStatus.CONFLICT);
+        return Map.of("code","0","msg","账号已创建");
     }
-
-    private boolean isAdminAuthorized(HttpServletRequest request) {
-        String token = System.getenv("ADMIN_API_TOKEN");
-        return token != null && !token.isBlank() && Objects.equals(token, request.getHeader("X-Admin-Token"));
-    }
-
-    private String decryptPassword(String encryptedPassword) throws Exception {
-        String privateKey = rsaKeyMapper.getPrivateKey();
-        byte[] sentPassWord = Base64.decodeBase64(encryptedPassword.getBytes(StandardCharsets.UTF_8));
-        byte[] decoded = Base64.decodeBase64(privateKey);
-
-        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA")
-                .generatePrivate(new PKCS8EncodedKeySpec(decoded));
-
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, priKey);
-        return new String(cipher.doFinal(sentPassWord));
-    }
-
-    private boolean isBcryptHash(String value) {
-        return value != null && (value.startsWith("$2a$") || value.startsWith("$2b$") || value.startsWith("$2y$"));
-    }
-
-    @PostMapping("adminLogin")
-    public Object adminLogin(@RequestBody Admin userLoginInfo)
-            throws Exception {
-        String userName = userLoginInfo.userName;
-        String passWord = userLoginInfo.passWord;
-
-        List<Admin> list = adminMapper.adminLogin(userName);
-        java.util.Map<String, Object> json = new java.util.HashMap<>();
-        if (list.isEmpty()) {
-            json.put("code", "1");
-            json.put("msg", "用户不存在");
-            return json;
-        }
-        Object info = list.get(0);
-
-        String outSentPassWord = decryptPassword(passWord);
-        String storedPassWord = (String) Objects.requireNonNull(getFieldValueByName("passWord", info));
-        boolean passwordMatches = isBcryptHash(storedPassWord)
-                ? PASSWORD_ENCODER.matches(outSentPassWord, storedPassWord)
-                : outSentPassWord.equals(decryptPassword(storedPassWord));
-
-        List<String> fields = new ArrayList<>();
-
-        fields.add("adminId");
-        fields.add("adminRole");
-        fields.add("adminUUid");
-        fields.add("emailAddress");
-        fields.add("phoneNumber");
-        fields.add("userName");
-
-        if (passwordMatches) {
-            json.put("code", "0");
-            json.put("msg", "登陆成功");
-            java.util.Map<String, Object> data = new java.util.HashMap<>();
-            for (String x : fields) {
-                data.put(x, Objects.requireNonNull(getFieldValueByName(x, info)));
-            }
-            json.put("data", data);
-        } else {
-            json.put("code", "1");
-            json.put("msg", "密码错误");
-        }
-        return json;
-    }
-
-    private Object getFieldValueByName(String fieldName, Object o) {
-        try {
-            String firstLetter = fieldName.substring(0, 1).toUpperCase();
-            String getter = "get" + firstLetter + fieldName.substring(1);
-            Method methodG = o.getClass().getMethod(getter);
-            return methodG.invoke(o);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    @PostMapping("adminRegis")
-    public Object adminRegis(HttpServletRequest ignoredRequest, @RequestBody Admin userRegisInfo) throws Exception {
-        String pin = userRegisInfo.pin;
-        String userName = userRegisInfo.userName;
-        String pinShould = System.getenv("ADMIN_REGISTRATION_PIN");
-
-        if (pinShould == null || pinShould.isBlank() || !Objects.equals(pin, pinShould)) {
-            java.util.Map<String, Object> json = new java.util.HashMap<>();
-            json.put("code", "1");
-            json.put("msg", "pin码错误");
-            return json;
-        } else if (adminMapper.checkUserName(userName) == 1) {
-            java.util.Map<String, Object> json = new java.util.HashMap<>();
-            json.put("code", "1");
-            json.put("msg", "用户名已存在");
-            return json;
-        } else {
-            String passWord = userRegisInfo.passWord;
-            String emailAddress = userRegisInfo.emailAddress;
-            String phoneNumber = userRegisInfo.phoneNumber;
-            UUID uuid = UUID.randomUUID();
-            int result = adminMapper.adminRegis(userName, PASSWORD_ENCODER.encode(decryptPassword(passWord)), emailAddress, phoneNumber, uuid.toString(), 1);
-            java.util.Map<String, Object> json = new java.util.HashMap<>();
-            if (result == 1) {
-                json.put("code", "0");
-                json.put("msg", "注册成功");
-            } else {
-                json.put("code", "1");
-                json.put("msg", "注册失败");
-            }
-            return json;
-        }
-    }
-
-    @GetMapping("getAllAdminsInfo")
-    public Object getAllAdminsInfo(HttpServletRequest request) {
-        if (!isAdminAuthorized(request)) {
-            return unauthorized();
-        }
-        List<AdminInfo> adminList = adminMapper.getAllAdminsInfo();
-        java.util.Map<String, Object> json = new java.util.HashMap<>();
-        json.put("code", "0");
-        json.put("data", adminList);
-        return json;
-    }
-
-    @GetMapping("deleteAdmin")
-    public Object deleteAdmin(HttpServletRequest request) {
-        if (!isAdminAuthorized(request)) {
-            return unauthorized();
-        }
-        String adminUUid = request.getParameter("adminUUid");
-
-        int deleteCount = adminMapper.deleteAdmin(adminUUid);
-
-        java.util.Map<String, Object> json = new java.util.HashMap<>();
-        if (deleteCount == 1) {
-            json.put("code", "0");
-            json.put("data", deleteCount);
-            json.put("msg", "删除成功");
-        } else {
-            json.put("code", "1");
-            json.put("data", deleteCount);
-            json.put("msg", "删除失败");
-        }
-        return json;
+    @PostMapping("/deleteAdmin")
+    public Object delete(@RequestBody Map<String,String> input,HttpServletRequest request) {
+        String id=input.get("adminUUid");
+        if(id==null||id.equals(Sessions.user(request).id())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        if(admins.deleteAdmin(id)!=1) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        sessions.revoke(id);
+        return Map.of("code","0");
     }
 }

@@ -64,7 +64,7 @@ public interface WaterMeterWellMapper {
             " operatingUsersNumber = ''," +
             " operatingUserDetailsAndDetailedAddress = ''," +
             " specialBankUsersNumber = ''," +
-            " specialBankUserDetailsAndDetailedAddress = '',")
+            " specialBankUserDetailsAndDetailedAddress = ''")
     Integer addWaterMeterWell(@Param("filledBy") String filledBy,
                               @Param("accountName") String accountName,
                               @Param("accountNumber") String accountNumber,

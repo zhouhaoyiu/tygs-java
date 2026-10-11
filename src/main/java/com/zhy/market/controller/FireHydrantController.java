@@ -17,6 +17,8 @@ import static com.zhy.market.controller.utils.getJsonRes;
 @RestController
 @RequestMapping("FireHydrant")
 public class FireHydrantController {
+    @Resource private com.zhy.market.security.MeterActions meterActions;
+    @Resource private com.zhy.market.security.RepairActions repairActions;
 
     @Resource
     private FireHydrantMapper fireHydrantMapper;
@@ -34,17 +36,10 @@ public class FireHydrantController {
         return getJsonRes(0, "获得消防栓信息成功", fireHydrantMapper.getFireHydrantRepairInfoById(id));
     }
 
-    @GetMapping("updateFireHydrantRepairInfoWithId")
-    public Object updateFireHydrantRepairInfoWithId(@RequestBody RepairInfo repairInfo) {
-        String repairInfoText = repairInfo.repairInfo;
-        int id = repairInfo.id;
-
-        int res = fireHydrantMapper.updateFireHydrantRepairInfoWithId(repairInfoText, id);
-        if (res == 1) {
-            return getJsonRes(0, "更新维修记录成功");
-        } else {
-            return getJsonRes(1, "更新维修记录失败");
-        }
+    @PostMapping("updateFireHydrantRepairInfoWithId")
+    public Object updateFireHydrantRepairInfoWithId(@RequestBody RepairInfo input, HttpServletRequest request) {
+        repairActions.append(input,"firehydrant",com.zhy.market.security.Sessions.user(request));
+        return getJsonRes(0,"维修记录已保存");
     }
 
     @GetMapping("getFireHydrantRepairInfoById")
@@ -67,15 +62,9 @@ public class FireHydrantController {
         return getJsonRes(0, "获得水表信息成功", waterMeterInfoMapper.getFireHydrantWaterMeterInfoByWallId(wallId));
     }
 
-    @GetMapping("del" +
-            "eteWaterMeterInfoById")
-    public Object deleteWaterMeterInfoById(HttpServletRequest request) {
-        String waterMeterId = request.getParameter("waterMeterId");
-        Integer res = waterMeterInfoMapper.updateWaterMeterInfoStatus(waterMeterId, "2");
-        if (res == 1) {
-            return getJsonRes(0, "删除水表信息成功");
-        } else {
-            return getJsonRes(1, "删除水表信息失败");
-        }
+    @PostMapping("deleteWaterMeterInfoById")
+    public Object deleteWaterMeterInfoById(@RequestBody com.zhy.market.security.MeterActions.Retire input, HttpServletRequest request) {
+        meterActions.retire(input, "firehydrant", com.zhy.market.security.Sessions.user(request));
+        return getJsonRes(0, "水表已停用");
     }
 }

@@ -8,5 +8,7 @@ import lombok.Data;
 @Data
 public class RepairInfo {
     public String repairInfo;
+    public String expectedInfo;
+    public String requestId;
     public Integer id;
 }

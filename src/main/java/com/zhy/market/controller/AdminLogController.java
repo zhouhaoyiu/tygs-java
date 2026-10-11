@@ -22,10 +22,10 @@ public class AdminLogController {
     private AdminLogMapper adminLogMapper;
 
     @PostMapping("addAdminLog")
-    public Object addAdminLog(@RequestBody @NotNull AdminLog adminLog) {
+    public Object addAdminLog(@RequestBody @NotNull AdminLog adminLog, jakarta.servlet.http.HttpServletRequest request) {
         String adminLogUUid = String.valueOf(UUID.randomUUID());
-        String adminUUid = adminLog.getAdminUUid();
-        String logTime = adminLog.getLogTime();
+        String adminUUid = com.zhy.market.security.Sessions.user(request).id();
+        String logTime = java.time.Instant.now().toString();
         String info = adminLog.getInfo();
         String remark = adminLog.getRemark();
 
@@ -44,7 +44,8 @@ public class AdminLogController {
     }
 
     @GetMapping("getAdminLogByAdminUUid")
-    public Object getAdminLogByAdminUUid(@RequestParam String adminUUid) {
+    public Object getAdminLogByAdminUUid(@RequestParam String adminUUid, jakarta.servlet.http.HttpServletRequest request) {
+        com.zhy.market.security.Sessions.owner(request, adminUUid);
         List<AdminLog> adminLogs = adminLogMapper.getAdminLogByAdminUUid(adminUUid);
         return getJsonRes(1, "获得管理员日志成功", adminLogs);
     }
