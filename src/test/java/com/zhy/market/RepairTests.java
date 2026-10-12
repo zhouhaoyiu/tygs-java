@@ -2,7 +2,7 @@ package com.zhy.market;
 import com.zhy.market.security.*;
 import com.zhy.market.domain.RepairInfo;
 import com.zhy.market.mapper.AdminLogMapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.junit.jupiter.api.Test;
