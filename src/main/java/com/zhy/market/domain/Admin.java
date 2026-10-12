@@ -81,4 +81,3 @@ public class Admin {
     public Integer adminRole;
     public String pin;
 }
-

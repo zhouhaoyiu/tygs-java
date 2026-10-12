@@ -11,5 +11,4 @@ public class ThreeSupply {
     public String jfh;
     public String cbh;
     public String mc;
-
 }

@@ -1,0 +1,33 @@
+{
+  "meters": {
+    "填写人": "filledBy", "所在部门": "department", "填写时间": "writtingTime", "用户类型": "userType",
+    "编号": "accountIdentifier", "户名": "accountName", "户号": "accountNumber", "坐标": "coordinates", "地址": "address", "街道地址": "address",
+    "口径": "caliber", "井深": "wellDepth", "内含设施": "includedFacilities", "水表厂家": "waterMeterManufacturer",
+    "运行状态": "operatingStatus", "井外拍照": "wellOutside", "井内拍照": "wellInside", "用水性质": "waterNature",
+    "经营用户数量": "operatingUsersNumber", "经营用户明细及详细地址": "operatingUserDetailsAndDetailedAddress", "特行用户数量": "specialBankUsersNumber", "特行用户明细及详细地址": "specialBankUserDetailsAndDetailedAddress"
+  },
+  "rooms": {
+    "填写人": "filledBy", "所在部门": "department", "填写时间": "writtingTime", "用户类型": "userType", "编号": "accountIdentifier",
+    "小区名称": "communityName", "详细地址": "detailedAddress", "位置": "location", "水表位置": "watermeterLocation", "水表类型": "watermeterType",
+    "总户数": "totalHouseholds", "居民户数": "numberHouseholds", "非居民户数": "numberNoHouseholds", "带分项户数": "numberHouseholdsWithSubitems",
+    "非居民用户明细、详细门牌号": "noHouseholdsDetailsAndDetailNumber", "特行户数": "numberSpecialHouseHolds", "特行用户明细及详细门牌号": "specialHouseHoldsDetailsAndDetailedHouseNumber",
+    "管材": "pipe", "分水器情况": "conditionOfWaterSeparator", "排查情况": "Troubleshooting", "表间外拍照": "wallOutSide", "表间内拍照": "wallInside", "责任人": "personLiable"
+  },
+  "chambers": {
+    "填写人": "filledBy", "所在部门": "department", "填写时间": "fillingTime", "用户类型": "customerType", "编号": "accountIdentifier",
+    "街道名称": "streetName", "井室类型": "wellChamberType", "口径": "caliber", "运行状态": "runningState", "井深(米)": "wellDepth",
+    "定位坐标": "positioningCoordinates", "井外照片": "photosOutsideTheWell", "井内照片": "photosInTheWell", "厂家": "manufactor", "运行时间": "runTime"
+  },
+  "recheck": {
+    "填写人": "filledBy", "所在部门": "department", "填写时间": "writtingTime", "用户类型": "userType", "编号": "accountIdentifier",
+    "户名": "accountName", "户号": "accountNumber", "地址": "address", "定位坐标": "coordinates", "街道名称": "streetName",
+    "内含设施": "includedFacilities", "口径": "caliber", "水表厂家": "waterMeterManufacturer", "运行状态": "operatingStatus", "井深(米)": "wellDepth",
+    "井外照片": "wellOutside", "井内照片": "wellInside", "用水性质": "waterNature"
+  },
+  "maintenance": {
+    "填写人": "filledBy", "所在部门": "department", "填写时间": "fillingTime", "用户类型": "customerType", "编号": "accountIdentifier",
+    "街道名称": "streetName", "详细地址": "address", "井室类型": "wellChamberType", "口径": "caliber", "运行状态": "runningState",
+    "本次维护、检修内容": "maintenanceContent", "井深(米)": "wellDepth", "定位坐标": "positioningCoordinates", "井外照片": "photosOutsideTheWell", "井内照片": "photosInTheWell",
+    "厂家": "manufactor", "检修时间": "maintenanceTime", "检修人员": "maintenanceStaff"
+  }
+}

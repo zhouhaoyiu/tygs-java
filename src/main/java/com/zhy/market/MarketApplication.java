@@ -16,12 +16,12 @@ public class MarketApplication {
     @Bean
     public ConfigurableServletWebServerFactory webServerFactory() {
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-        factory.addConnectorCustomizers(connector -> connector.setProperty("relaxedQueryChars", "|{}[]\\"));
+        factory.addConnectorCustomizers(
+                connector -> connector.setProperty("relaxedQueryChars", "|{}[]\\"));
         return factory;
     }
 
     public static void main(String[] args) {
         SpringApplication.run(MarketApplication.class, args);
     }
-
 }

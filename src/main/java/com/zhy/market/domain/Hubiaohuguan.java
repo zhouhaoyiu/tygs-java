@@ -12,5 +12,4 @@ public class Hubiaohuguan {
     private String secondarywatersupply;
     private String watersupplycontract;
     private String remarks;
-
 }

@@ -1,13 +1,11 @@
 package com.zhy.market.mapper;
 
 import com.zhy.market.domain.WaterMeterRoom;
-
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @author Administrator
@@ -25,7 +23,8 @@ public interface WaterMeterRoomMapper {
     List<WaterMeterRoom> getWaterMeterRoomInfoByFilled();
 
     @Update("update watermeterroom set repairInfo = #{repairInfo} where id = #{id} ")
-    Integer updateWaterMeterRoomRepairInfoWithId(@Param("repairInfo") String repairInfo, @Param("id") Integer id);
+    Integer updateWaterMeterRoomRepairInfoWithId(
+            @Param("repairInfo") String repairInfo, @Param("id") Integer id);
 
     @Select("select repairInfo from watermeterroom where id = #{id}")
     String getWaterMeterRoomRepairInfoById(@Param("id") Integer id);

@@ -1,22 +1,22 @@
 package com.zhy.market.controller;
 
 import com.zhy.market.mapper.Sheet1Mapper;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Administrator
  */
 @RequestMapping("sheet1")
 @RestController
-
 public class Sheet1Controller {
-    @Resource
-    private Sheet1Mapper sheet1Mapper;
+    private final Sheet1Mapper sheet1Mapper;
+
+    public Sheet1Controller(Sheet1Mapper sheet1Mapper) {
+        this.sheet1Mapper = sheet1Mapper;
+    }
 
     @GetMapping("getInfoByPage")
     public Object getAllInfo(HttpServletRequest request) {

@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.annotation.Resource;
-
 /**
  * @author Administrator
  */
@@ -14,12 +12,14 @@ import jakarta.annotation.Resource;
 @RestController
 public class ThreeSupplyController {
 
-    @Resource
-    private ThreeSupplyMapper threeSupplyMapper;
+    private final ThreeSupplyMapper threeSupplyMapper;
 
-    @GetMapping("getAllThreeSupply")
-    public Object getAllThreeSupply(){
-        return threeSupplyMapper.getAllThreeSupplyInfo();
+    public ThreeSupplyController(ThreeSupplyMapper threeSupplyMapper) {
+        this.threeSupplyMapper = threeSupplyMapper;
     }
 
+    @GetMapping("getAllThreeSupply")
+    public Object getAllThreeSupply() {
+        return threeSupplyMapper.getAllThreeSupplyInfo();
+    }
 }

@@ -46,3 +46,6 @@ log
 temp/
 .env
 *.key
+local-data/
+*.mv.db
+*.trace.db

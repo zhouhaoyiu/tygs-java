@@ -49,6 +49,4 @@ public class AdminInfo {
     public void setAdminRole(Integer adminRole) {
         this.adminRole = adminRole;
     }
-
-
 }
